@@ -30,7 +30,7 @@ jobs:
       - name: Pull Android toolchain
         if: steps.cache-build-env.outputs.cache-hit != 'true'
         run: |
-          mkdir toolchain
+          mkdir toolchain && cd toolchain
           wget "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229b.tar.gz" -O clang.tar.gz
           mkdir clang && tar xvf clang.tar.gz -C clang 
           # gcc 7.2 arm64
@@ -39,7 +39,7 @@ jobs:
           # gcc 7.2 arm32
           wget "https://android-review.linaro.org/plugins/gitiles/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-7.2/+archive/refs/heads/master.tar.gz" -O gcc.arm.tar.gz
           mkdir gcc32 && tar xvf gcc.arm.tar.gz -C gcc32
-          rm *.tar.gz
+          rm *.tar.gz && cd ..
 
       - name: Save Android toolchain
         if: steps.cache-build-env.outputs.cache-hit != 'true'
