@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: |
-            ~/toolchain
+            toolchain
           key: ${{ runner.os }}-android-toolchain
       
       - name: Cache kernel source
@@ -73,17 +73,17 @@ jobs:
       - name: Setup env
         run: |
           echo "PATH=~/toolchain/clang/bin:~/toolchain/gcc64/bin:~/toolchain/gcc32/bin:$PATH" >> $GITHUB_ENV
-          cd kernel
 
       - name: Build kernel
         run: |
+          cd kernel
           make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- vendor/xiaomi/mi845_defconfig
           cat arch/arm64/configs/vendor/xiaomi/${{ matrix.variants }}_defconfig >> out/.config
           sed -i 's/CONFIG_CC_WERROR=y/CONFIG_CC_WERROR=n/g' out/.config
           yes "" | make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- -j$(nproc --all)
       
       - name: Upload entire out folder
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: kernel-${{ matrix.variants }}
           path: kernel/out
