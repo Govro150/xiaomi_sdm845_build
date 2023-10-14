@@ -21,7 +21,7 @@ jobs:
           python-is-python3 
       - name: Cache build env
         id: cache-build-env
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/toolchain
@@ -40,10 +40,18 @@ jobs:
           wget "https://android-review.linaro.org/plugins/gitiles/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-7.2/+archive/refs/heads/master.tar.gz" -O gcc.arm.tar.gz
           mkdir gcc32 && tar xvf gcc.arm.tar.gz -C gcc32
           rm *.tar.gz
+
+      - name: Save Android toolchain
+        if: steps.cache-build-env.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            ~/toolchain
+          key: ${{ runner.os }}-android-toolchain
       
       - name: Cache kernel source
         id: cache-kernel-source
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             kernel
@@ -53,6 +61,14 @@ jobs:
         if: steps.cache-kernel-source.outputs.cache-hit != 'true'
         run: |
           git clone --depth=1 https://github.com/LineageOS/android_kernel_xiaomi_sdm845 kernel
+
+      - name: Save kernel source
+        if: steps.cache-kernel-source.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            kernel
+          key: ${{ runner.os }}-kernel-source
   
       - name: Setup env
         run: |
