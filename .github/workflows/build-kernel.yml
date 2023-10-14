@@ -39,6 +39,7 @@ jobs:
           # gcc 7.2 arm32
           wget "https://android-review.linaro.org/plugins/gitiles/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-7.2/+archive/refs/heads/master.tar.gz" -O gcc.arm.tar.gz
           mkdir gcc32 && tar xvf gcc.arm.tar.gz -C gcc32
+          rm *.tar.gz
       
       - name: Cache kernel source
         id: cache-kernel-source
