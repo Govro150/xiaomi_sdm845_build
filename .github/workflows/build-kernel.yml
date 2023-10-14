@@ -79,7 +79,7 @@ jobs:
         run: |
           cd kernel
           make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- vendor/xiaomi/mi845_defconfig
-          cat arch/arm64/configs/vendor/xiaomi/${{ matrix.variants }}_defconfig >> out/.config
+          cat arch/arm64/configs/vendor/xiaomi/${{ matrix.variants }}.defconfig >> out/.config
           sed -i 's/CONFIG_CC_WERROR=y/CONFIG_CC_WERROR=n/g' out/.config
           yes "" | make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- -j$(nproc --all)
       
