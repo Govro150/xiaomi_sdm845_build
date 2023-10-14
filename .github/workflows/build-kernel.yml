@@ -7,7 +7,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        variants: [beryllium] #, dipper, equuleus, perseus, polaris, ursa]
+        variants: [beryllium, dipper, equuleus, perseus, polaris, ursa]
     runs-on: ubuntu-latest
     steps:
       - name: Setup build env
