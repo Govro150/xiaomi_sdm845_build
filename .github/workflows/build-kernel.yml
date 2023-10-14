@@ -85,11 +85,11 @@ jobs:
           yes "" | make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- oldconfig
           make -j$(nproc --all) ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- 2>&1 | tee build.log
       
-      - name: Upload entire out folder
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: kernel-${{ matrix.variants }}
-          path: kernel/out
+          path: kernel/out/arch/arm64/boot
 
       - name: Upload build log
         uses: actions/upload-artifact@v3
