@@ -72,7 +72,8 @@ jobs:
   
       - name: Setup env
         run: |
-          echo "PATH=~/toolchain/clang/bin:~/toolchain/gcc64/bin:~/toolchain/gcc32/bin:$PATH" >> $GITHUB_ENV
+          WORKSPACE=$(pwd)
+          echo "PATH=$WORKSPACE/toolchain/clang/bin:$WORKSPACE/toolchain/gcc64/bin:$WORKSPACE/toolchain/gcc32/bin:$PATH" >> $GITHUB_ENV
 
       - name: Build kernel
         run: |
