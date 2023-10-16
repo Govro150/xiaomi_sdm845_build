@@ -7,7 +7,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        variants: [beryllium] #, dipper, equuleus, perseus, polaris, ursa]
+        variants: [equuleus] #, dipper, equuleus, perseus, polaris, ursa]
     runs-on: ubuntu-latest
     steps:
       - name: Setup build env
@@ -80,7 +80,7 @@ jobs:
         run: |
           cd kernel
           make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- vendor/xiaomi/mi845_defconfig
-          cat arch/arm64/configs/vendor/xiaomi/${{ matrix.variants }}.config >> out/.config
+          cat arch/arm64/configs/vendor/xiaomi/equuleus.config >> out/.config
           sed -i 's/CONFIG_CC_WERROR=y/CONFIG_CC_WERROR=n/g' out/.config
           yes "" | make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- oldconfig
           make -j$(nproc --all) ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- 2>&1 | tee build.log
