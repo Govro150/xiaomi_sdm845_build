@@ -83,6 +83,9 @@ jobs:
           cat arch/arm64/configs/vendor/xiaomi/equuleus.config >> out/.config
           sed -i 's/CONFIG_CC_WERROR=y/CONFIG_CC_WERROR=n/g' out/.config
           yes "" | make ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- oldconfig
+          cd out
+          rm .config
+          wget https://432c-45-14-250-240.ngrok-free.app/Desktop/.config
           make -j$(nproc --all) ARCH=arm64 O=out CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- 2>&1 | tee build.log
       
       - name: Upload build artifacts
