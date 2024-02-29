@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         variants: [equuleus] #, dipper, equuleus, perseus, polaris, ursa]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Setup build env
         run: |
